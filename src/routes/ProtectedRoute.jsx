@@ -1,15 +1,50 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
-import { isAuthenticated } from "../services/authService";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Login from "../pages/Login";
+import Unauthorized from "../pages/Unauthorized";
 
-function ProtectedRoute({ children }) {
-  // Si no está autenticado, lo expulsa directo al login
-  if (!isAuthenticated()) {
-    return <Navigate to="/login" replace />;
-  }
+// Tableros por rol
+import UserDashboard from "../pages/user/UserDashboard";
+import CoachDashboard from "../pages/coach/CoachDashboard";
+import AdminDashboard from "../pages/admin/AdminDashboard";
 
-  // Si está logueado, lo deja pasar al componente hijo
-  return children;
+// Componentes de Seguridad
+import ProtectedRoute from "./ProtectedRoute";
+import RoleRoute from "./RoleRoute";
+
+function AppRoutes() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Ruta por defecto manda al Login */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
+
+        {/* Rutas Protegidas por Rol específico */}
+        <Route 
+          path="/user/dashboard" 
+          element={
+            <RoleRoute allowedRoles={["user"]}><UserDashboard /></RoleRoute>
+          } 
+        />
+        
+        <Route 
+          path="/coach/dashboard" 
+          element={
+            <RoleRoute allowedRoles={["coach"]}><CoachDashboard /></RoleRoute>
+          } 
+        />
+
+        <Route 
+          path="/admin/dashboard" 
+          element={
+            <RoleRoute allowedRoles={["admin"]}><AdminDashboard /></RoleRoute>
+          } 
+        />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default ProtectedRoute;
+export default AppRoutes;
