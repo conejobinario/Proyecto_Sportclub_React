@@ -22,7 +22,7 @@ function Login() {
       // Guardamos el token y el objeto usuario en el localStorage
       saveSession(data.data.token, data.data.user);
 
-      // Redirección inteligente según la Rúbrica de Roles del SportClub
+      // Redirección inteligente según la Rúbrica de Roles
       if (data.data.user.role === "admin") {
         navigate("/admin/dashboard");
       } else if (data.data.user.role === "coach") {
@@ -31,7 +31,7 @@ function Login() {
         navigate("/user/dashboard");
       }
     } catch (err) {
-      // Captura el mensaje de error arrojado por el backend o el servicio
+      // Captura el mensaje de error arrojado por el backend
       setError(err.message);
     } finally {
       setLoading(false);
