@@ -1,64 +1,64 @@
-const API_URL = "http://localhost:3000/api/users"; [cite: 257]
+const API_URL = "http://localhost:3000/api/users";
 
 function getToken() {
-  return localStorage.getItem("token"); [cite: 260]
+  return localStorage.getItem("token");
 }
 
 function getHeaders() {
   return {
-    "Content-Type": "application/json", [cite: 263]
-    "Authorization": `Bearer ${getToken()}` [cite: 264]
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${getToken()}`
   };
 }
 
 // Listar usuarios (GET)
 export async function getUsers() {
-  const response = await fetch(API_URL, { [cite: 268]
-    method: "GET", [cite: 269]
-    headers: getHeaders() [cite: 270]
+  const response = await fetch(API_URL, {
+    method: "GET",
+    headers: getHeaders()
   });
-  if (!response.ok) { [cite: 273]
-    throw new Error("Error al obtener usuarios"); [cite: 274]
+  if (!response.ok) {
+    throw new Error("Error al obtener usuarios");
   }
-  return response.json(); [cite: 276]
+  return response.json();
 }
 
 // Crear usuario (POST)
 export async function createUser(userData) {
-  const response = await fetch(API_URL, { [cite: 279]
-    method: "POST", [cite: 281]
-    headers: getHeaders(), [cite: 282]
-    body: JSON.stringify(userData) [cite: 283]
+  const response = await fetch(API_URL, {
+    method: "POST",
+    headers: getHeaders(),
+    body: JSON.stringify(userData)
   });
-  const data = await response.json(); [cite: 284]
-  if (!response.ok) { [cite: 285]
-    throw new Error(data.message || "Error al crear usuario"); [cite: 287]
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Error al crear usuario");
   }
-  return data; [cite: 288]
+  return data;
 }
 
 // Editar usuario (PUT)
 export async function updateUser(id, userData) {
-  const response = await fetch(`${API_URL}/${id}`, { [cite: 290]
-    method: "PUT", [cite: 291]
-    headers: getHeaders(), [cite: 292]
-    body: JSON.stringify(userData) [cite: 293]
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: "PUT",
+    headers: getHeaders(),
+    body: JSON.stringify(userData)
   });
-  const data = await response.json(); [cite: 296]
-  if (!response.ok) { [cite: 297]
-    throw new Error(data.message || "Error al actualizar usuario"); [cite: 299]
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Error al actualizar usuario");
   }
-  return data; [cite: 300]
+  return data;
 }
 
 // Eliminar usuario (DELETE)
 export async function deleteUser(id) {
-  const response = await fetch(`${API_URL}/${id}`, { [cite: 302]
-    method: "DELETE", [cite: 303]
-    headers: getHeaders() [cite: 304]
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: "DELETE",
+    headers: getHeaders()
   });
-  if (!response.ok) { [cite: 307]
-    throw new Error("Error al eliminar usuario"); [cite: 308]
+  if (!response.ok) {
+    throw new Error("Error al eliminar usuario");
   }
-  return true; [cite: 310]
+  return true;
 }
