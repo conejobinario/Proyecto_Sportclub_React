@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Alert, Button, Card, Container, Form, Spinner } from "react-bootstrap";
+import { Alert, Button, Card, Form, Spinner } from "react-bootstrap";
 import { loginUser, saveSession } from "../services/authService";
 
 function Login() {
@@ -14,15 +14,9 @@ function Login() {
     event.preventDefault();
     setError("");
     setLoading(true);
-
     try {
-      // Llamada al servicio de autenticación centralizado
       const data = await loginUser({ email, password });
-      
-      // Guardamos el token y el objeto usuario en el localStorage
       saveSession(data.data.token, data.data.user);
-
-      // Redirección inteligente según la Rúbrica de Roles
       if (data.data.user.role === "admin") {
         navigate("/admin/dashboard");
       } else if (data.data.user.role === "coach") {
@@ -31,7 +25,6 @@ function Login() {
         navigate("/user/dashboard");
       }
     } catch (err) {
-      // Captura el mensaje de error arrojado por el backend
       setError(err.message);
     } finally {
       setLoading(false);
@@ -39,59 +32,64 @@ function Login() {
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center vh-100">
-      <Card style={{ width: "24rem" }} className="shadow-lg border-0 rounded-4">
-        <Card.Body className="p-4">
-          <Card.Title className="text-center mb-4 fw-bold text-dark">
-            SportClub Login
-          </Card.Title>
-          
-          {/* Alerta de Bootstrap dinámica si ocurre algún error de credenciales */}
-          {error && <Alert variant="danger" className="py-2 text-center">{error}</Alert>}
-          
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label className="fw-semibold">Correo electrónico</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="ejemplo@demo.cl"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-4" controlId="formBasicPassword">
-              <Form.Label className="fw-semibold">Contraseña</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Ingrese su contraseña"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </Form.Group>
-
-            {/* Botón controlado por estado que muestra un spinner interactivo al cargar */}
-            <Button 
-              type="submit" 
-              variant="primary" 
-              className="w-100 py-2 fw-bold" 
-              disabled={loading}
-            >
-              {loading ? (
-                <>
-                  <Spinner size="sm" animation="border" className="me-2" />
-                  Ingresando...
-                </>
-              ) : (
-                "Ingresar"
-              )}
-            </Button>
-          </Form>
-        </Card.Body>
-      </Card>
-    </Container>
+    <div style={{ backgroundColor: "#2E1A47", minHeight: "100vh" }} className="d-flex align-items-center">
+      <div className="container py-5">
+        <div className="row align-items-center">
+          <div className="col-lg-6 mb-4 text-white">
+            <h1 className="display-5 fw-bold mb-3">Tu mejor versión comienza hoy</h1>
+            <p className="lead">En SportClub no solo vienes a entrenar... vienes a crecer, a superarte y a construir tu mejor versión.</p>
+          </div>
+          <div className="col-lg-5 ms-auto">
+            <Card className="shadow border-0 rounded-4">
+              <Card.Body className="p-4 p-md-5">
+                <h2 className="text-center fw-bold mb-4" style={{ color: "#2E1A47" }}>Login</h2>
+                {error && <Alert variant="danger" className="py-2 text-center">{error}</Alert>}
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group className="mb-3">
+                    <Form.Label className="fw-bold">Email:</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder="Ingrese su correo"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-4">
+                    <Form.Label className="fw-bold">Contraseña:</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Ingrese su contraseña"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
+                  <div className="d-grid mb-3">
+                    <Button
+                      type="submit"
+                      className="fw-bold text-dark border-0"
+                      style={{ backgroundColor: "#F2B705" }}
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <><Spinner size="sm" animation="border" className="me-2" />Ingresando...</>
+                      ) : "Iniciar Sesión"}
+                    </Button>
+                  </div>
+                  <hr />
+                  <div className="text-center mt-3">
+                    <a href="/register" className="text-decoration-none" style={{ color: "#2E1A47" }}>
+                      ¿No tienes cuenta? Registrarse
+                    </a>
+                  </div>
+                </Form>
+              </Card.Body>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
