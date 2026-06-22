@@ -23,9 +23,31 @@ function SportFormModal({ show, handleClose, handleSave, selectedSport }) {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = "Nombre obligatorio.";
-    if (!formData.objective.trim()) newErrors.objective = "Objetivo obligatorio.";
-    if (!formData.duration) newErrors.duration = "Duración obligatoria.";
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Nombre obligatorio.";
+    } else if (formData.name.trim().length < 3) {
+      newErrors.name = "El nombre debe tener al menos 3 caracteres.";
+    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(formData.name.trim())) {
+      newErrors.name = "El nombre solo puede contener letras.";
+    }
+
+    if (!formData.objective.trim()) {
+      newErrors.objective = "Objetivo obligatorio.";
+    } else if (formData.objective.trim().length < 10) {
+      newErrors.objective = "El objetivo debe tener al menos 10 caracteres.";
+    } else if (/^\d+$/.test(formData.objective.trim())) {
+      newErrors.objective = "El objetivo no puede ser solo números.";
+    }
+
+    if (!formData.duration) {
+      newErrors.duration = "Duración obligatoria.";
+    } else if (Number(formData.duration) < 1) {
+      newErrors.duration = "La duración debe ser mayor a 0.";
+    } else if (Number(formData.duration) > 300) {
+      newErrors.duration = "La duración no puede superar 300 minutos.";
+    }
+
     return newErrors;
   };
 
