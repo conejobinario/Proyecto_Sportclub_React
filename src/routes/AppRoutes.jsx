@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "../pages/Login";
 import Unauthorized from "../pages/Unauthorized";
 import UsersPage from "../pages/admin/UsersPage";
+import SportsPage from "../pages/admin/SportsPage";
 
 // Tableros por rol
 import UserDashboard from "../pages/user/UserDashboard";
@@ -17,12 +18,10 @@ function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Ruta por defecto manda al Login */}
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
 
-        {/* Rutas Protegidas por Rol específico */}
         <Route 
           path="/user/dashboard" 
           element={
@@ -37,7 +36,6 @@ function AppRoutes() {
           } 
         />
 
-        {/* Grupo de Rutas Protegidas de Administración */}
         <Route 
           path="/admin/*" 
           element={
@@ -45,6 +43,7 @@ function AppRoutes() {
               <Routes>
                 <Route path="dashboard" element={<AdminDashboard />} />
                 <Route path="users" element={<UsersPage />} />
+                <Route path="sports" element={<SportsPage />} />
               </Routes>
             </RoleRoute>
           } 
