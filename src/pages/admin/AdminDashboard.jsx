@@ -9,7 +9,7 @@ function AdminDashboard() {
 
   return (
     <>
-      <AppNavbar />
+      <AppNavbar bgColor="#721c24" />
       <div className="p-4 rounded shadow-sm" style={{ backgroundColor: "#f8d7da", borderLeft: "6px solid #721c24" }}>
         <h2 style={{ color: "#721c24" }}>Panel de Administración</h2>
         <p style={{ color: "#721c24" }}>Bienvenido a la sección exclusiva para administradores de SportClub.</p>
