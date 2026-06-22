@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "../pages/Login";
+import Register from "../pages/Register";
 import Unauthorized from "../pages/Unauthorized";
 import UsersPage from "../pages/admin/UsersPage";
 import SportsPage from "../pages/admin/SportsPage";
@@ -20,6 +21,7 @@ function AppRoutes() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
 
         <Route 
