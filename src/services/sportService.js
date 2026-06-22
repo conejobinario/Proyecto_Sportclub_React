@@ -1,45 +1,60 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const API_URL = "http://localhost:3000/api/sport";
 
-export const getSports = async () => {
-  const res = await fetch(`${API_URL}/api/sports`);
-  if (!res.ok) throw new Error("Error al obtener deportes");
-  return res.json();
-};
+function getToken() {
+  return localStorage.getItem("token");
+}
 
-export const createSport = async (data) => {
-  const res = await fetch(`${API_URL}/api/sports`, {
+function getHeaders() {
+  return {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${getToken()}`
+  };
+}
+
+export async function getSports() {
+  const response = await fetch(API_URL, {
+    method: "GET",
+    headers: getHeaders()
+  });
+  if (!response.ok) throw new Error("Error al obtener deportes");
+  return response.json();
+}
+
+export async function createSport(data) {
+  const response = await fetch(API_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    headers: getHeaders(),
+    body: JSON.stringify(data)
   });
-  if (!res.ok) throw new Error("Error al crear deporte");
-  return res.json();
-};
+  if (!response.ok) throw new Error("Error al crear deporte");
+  return response.json();
+}
 
-export const updateSport = async (id, data) => {
-  const res = await fetch(`${API_URL}/api/sports/${id}`, {
+export async function updateSport(id, data) {
+  const response = await fetch(`${API_URL}/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    headers: getHeaders(),
+    body: JSON.stringify(data)
   });
-  if (!res.ok) throw new Error("Error al actualizar deporte");
-  return res.json();
-};
+  if (!response.ok) throw new Error("Error al actualizar deporte");
+  return response.json();
+}
 
-export const deleteSport = async (id) => {
-  const res = await fetch(`${API_URL}/api/sports/${id}`, {
+export async function deleteSport(id) {
+  const response = await fetch(`${API_URL}/${id}`, {
     method: "DELETE",
+    headers: getHeaders()
   });
-  if (!res.ok) throw new Error("Error al eliminar deporte");
-  return res.json();
-};
+  if (!response.ok) throw new Error("Error al eliminar deporte");
+  return response.json();
+}
 
-export const toggleSportStatus = async (id, status) => {
-  const res = await fetch(`${API_URL}/api/sports/${id}/status`, {
+export async function toggleSportStatus(id, status) {
+  const response = await fetch(`${API_URL}/${id}/status`, {
     method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ status }),
+    headers: getHeaders(),
+    body: JSON.stringify({ status })
   });
-  if (!res.ok) throw new Error("Error al cambiar estado");
-  return res.json();
-};
+  if (!response.ok) throw new Error("Error al cambiar estado");
+  return response.json();
+}
