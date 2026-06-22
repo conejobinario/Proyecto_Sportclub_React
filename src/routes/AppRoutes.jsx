@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "../pages/Login";
 import Unauthorized from "../pages/Unauthorized";
 import UsersPage from "../pages/admin/UsersPage";
+import SportsPage from "../pages/admin/SportsPage";
 
 // Tableros por rol
 import UserDashboard from "../pages/user/UserDashboard";
@@ -43,15 +44,4 @@ function AppRoutes() {
           element={
             <RoleRoute allowedRoles={["admin"]}>
               <Routes>
-                <Route path="dashboard" element={<AdminDashboard />} />
-                <Route path="users" element={<UsersPage />} />
-              </Routes>
-            </RoleRoute>
-          } 
-        />
-      </Routes>
-    </BrowserRouter>
-  );
-}
-
-export default AppRoutes;
+                <Route path="dashboard"
