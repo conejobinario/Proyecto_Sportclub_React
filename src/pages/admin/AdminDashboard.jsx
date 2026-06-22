@@ -1,5 +1,4 @@
 import React from "react";
-import UsersPage from "../pages/admin/UsersPage";
 import UsersPage from "./UsersPage";
 
 function AdminDashboard() {
