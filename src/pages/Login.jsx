@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Alert, Button, Card, Form, Spinner } from "react-bootstrap";
 import { loginUser, saveSession } from "../services/authService";
+import logo from "../assets/logo_empresa_letra_v1.png";
 
 function Login() {
   const navigate = useNavigate();
@@ -42,6 +43,9 @@ function Login() {
           <div className="col-lg-5 ms-auto">
             <Card className="shadow border-0 rounded-4">
               <Card.Body className="p-4 p-md-5">
+                <div className="text-center mb-3">
+                  <img src={logo} alt="SportClub" height="60" />
+                </div>
                 <h2 className="text-center fw-bold mb-4" style={{ color: "#2E1A47" }}>Login</h2>
                 {error && <Alert variant="danger" className="py-2 text-center">{error}</Alert>}
                 <Form onSubmit={handleSubmit}>
